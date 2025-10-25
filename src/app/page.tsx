@@ -11,18 +11,19 @@ import {
     Shield,
     Sparkles,
 } from 'lucide-react'
-import PhoneInput,{ isValidPhoneNumber } from "react-phone-number-input";
+import PhoneInput, {isValidPhoneNumber} from "react-phone-number-input";
 import 'react-phone-number-input/style.css'
 import './phone.css'
 import axios from "axios";
 import {UAParser} from "ua-parser-js";
 import FAQItem from "@/app/components/FAQItem";
+import {E164Number} from "libphonenumber-js";
 
 export default function Page() {
     const [activeFeature, setActiveFeature] = useState(0)
-    const [phone, setPhone] = useState('')
+    const [phone, setPhone] = useState<E164Number | undefined>(undefined)
     const [sending, setSending] = useState(false)
-    const [status, setStatus] = useState(null)
+    const [status, setStatus] = useState<string | null>(null)
     const [scrolled, setScrolled] = useState(false)
 
     const features = [
@@ -83,7 +84,7 @@ export default function Page() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    function normalizePhone(input) {
+    function normalizePhone(input: string) {
         const trimmed = (input || '').trim()
         if (/^0[5-9]\d{8}$/.test(trimmed)) return '+212' + trimmed.slice(1)
         if (/^\+?212\d{9}$/.test(trimmed.replace(/\s|-/g, ''))) return trimmed.replace(/\s|-/g, '')
@@ -103,7 +104,7 @@ export default function Page() {
 
         try {
             const infoRes = await axios.get("/api/getClientInfo");
-            const { browser, os, device, country } = infoRes.data;
+            const {browser, os, device, country} = infoRes.data;
 
             const date = new Date().toLocaleString();
 
@@ -113,7 +114,7 @@ export default function Page() {
 
             await axios.post("/api/sendSlack", payload);
             setStatus("success");
-            setPhone("");
+            setPhone(undefined);
         } catch (err) {
             console.error(err);
             setStatus("error");
@@ -289,7 +290,7 @@ export default function Page() {
                         </h2>
                         <div className="space-y-4">
                             {faqs.map((f, i) => (
-                                <FAQItem key={i} question={f.q} answer={f.a} />
+                                <FAQItem key={i} question={f.q} answer={f.a}/>
                             ))}
                         </div>
                     </div>

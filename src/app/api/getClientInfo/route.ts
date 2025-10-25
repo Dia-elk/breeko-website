@@ -14,8 +14,10 @@ export async function GET(req: NextRequest) {
         const device = uaResult.device.model || "Desktop";
 
         // Detect country via IP
-        const ip = req.headers.get("x-forwarded-for") || req.ip || "8.8.8.8"; // fallback
-        const geoRes = await axios.get(`https://ipapi.co/${ip}/json/`);
+        const forwarded = req.headers.get("x-forwarded-for");
+        const ip = forwarded ? forwarded.split(",")[0] : null;
+        const clientIp = ip || "8.8.8.8";
+        const geoRes = await axios.get(`https://ipapi.co/${clientIp}/json/`);
         const country = geoRes.data.country_name || "Unknown";
 
         return NextResponse.json({ browser, os, device, country });
