@@ -1,0 +1,77 @@
+.breeko-phone {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: rgba(var(--foreground-rgb), 0.03);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--foreground-rgb), 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.breeko-phone:hover {
+    border-color: rgba(var(--foreground-rgb), 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.breeko-phone:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.25);
+}
+
+.breeko-phone .PhoneInputCountry {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(var(--foreground-rgb), 0.05);
+    border-right: 1px solid rgba(var(--foreground-rgb), 0.1);
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.breeko-phone .PhoneInputCountry:hover {
+    background: rgba(var(--foreground-rgb), 0.08);
+}
+
+.breeko-phone .PhoneInputCountrySelect {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-weight: 500;
+    outline: none;
+}
+
+.breeko-phone .PhoneInputInput {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.breeko-phone .PhoneInputInput::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    .breeko-phone {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .breeko-phone .PhoneInputInput::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .breeko-phone:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+    }
+}
